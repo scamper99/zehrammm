@@ -3,106 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Senin İçin ❤️</title>
+<title>Zehramm ❤️</title>
 
 <style>
 body{
 margin:0;
-font-family:Arial, sans-serif;
-text-align:center;
-background:linear-gradient(135deg,#ff6fa5,#ff9acb);
+padding:0;
+font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+background:linear-gradient(135deg,#ff6fa5,#ff2e63);
 color:white;
+text-align:center;
 overflow:hidden;
 }
 
-.page{
-position:absolute;
+.overlay{
+position:fixed;
 width:100%;
 height:100%;
+background:linear-gradient(135deg,#ff6fa5,#ff2e63);
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
-transition:0.6s;
+flex-direction:column;
+z-index:5;
 }
 
-.hidden{
-opacity:0;
-pointer-events:none;
+.startBtn{
+padding:18px 30px;
+font-size:18px;
+border:none;
+border-radius:40px;
+background:white;
+color:#ff2e63;
+}
+
+.container{
+display:none;
+padding:30px 20px;
+}
+
+img{
+width:300px;
+border-radius:20px;
+margin-top:20px;
+box-shadow:0 0 30px rgba(255,255,255,0.9);
 }
 
 button{
+margin-top:25px;
 padding:15px 25px;
-font-size:20px;
+font-size:16px;
 border:none;
 border-radius:30px;
 background:white;
-color:#ff4d88;
-cursor:pointer;
+color:#ff2e63;
+}
+
+#surprise{
+display:none;
 margin-top:20px;
+font-size:18px;
 }
 
-.candle{
-font-size:80px;
-cursor:pointer;
-animation:flicker 1s infinite alternate;
+.heart{
+position:fixed;
+bottom:-20px;
+font-size:22px;
+animation:float 6s linear infinite;
 }
 
-@keyframes flicker{
-from{transform:scale(1);}
-to{transform:scale(1.1);}
+@keyframes float{
+from{transform:translateY(0);}
+to{transform:translateY(-110vh);}
 }
 
-.cake{
-font-size:100px;
-animation:pop 1s ease;
+.burst{
+position:fixed;
+font-size:26px;
+animation:burst 1s ease-out forwards;
 }
 
-@keyframes pop{
-from{transform:scale(0);}
-to{transform:scale(1);}
+@keyframes burst{
+0%{transform:scale(0.5);opacity:1;}
+100%{transform:scale(2);opacity:0;}
 }
 </style>
 </head>
-
 <body>
 
-<!-- 1. SAYFA -->
-<div id="page1" class="page">
-<h1>Sana bir sürprizim var ❤️</h1>
-<button onclick="nextPage(2)">Sürprizi Başlat</button>
-</div>
-
-<!-- 2. SAYFA -->
-<div id="page2" class="page hidden">
-<h2>Dilek tut ve muma dokun 🕯️</h2>
-<div class="candle" onclick="nextPage(3)">🕯️</div>
-</div>
-
-<!-- 3. SAYFA -->
-<div id="page3" class="page hidden">
-<div class="cake">🎂</div>
-<h1>İyi ki doğdun sevgilim ❤️</h1>
-<button onclick="nextPage(4)">Devam Et</button>
-</div>
-
-<!-- 4. SAYFA (Romantik Alan) -->
-<div id="page4" class="page hidden">
-<h1>Seni Çok Seviyorum ❤️</h1>
-<p>Hayatıma geldiğin için şükürler olsun...</p>
-<img src="foto.jpg" width="250" style="border-radius:20px;margin-top:20px;">
-</div>
-
+<!-- MÜZİK -->
 <audio id="music" src="muzik.mp3"></audio>
 
-<script>
-function nextPage(num){
-document.getElementById("page"+(num-1)).classList.add("hidden");
-document.getElementById("page"+num).classList.remove("hidden");
+<div class="overlay" id="overlay">
+<h2>💖 Zehramm için özel sürpriz 💖</h2>
+<button class="startBtn" onclick="startSite()">Sürprizi Başlat ❤️</button>
+</div>
 
-if(num===4){
-document.getElementById("music").play();
+<div class="container" id="mainContent">
+<h1 id="title"></h1>
+<h3>04/10/2025</h3>
+
+<p>
+Hayatımın en değerlisine özel olarak hazırladığım bu siteyi,  
+miss kokulu aşkıma armağan ediyorum.  
+Dualarımın karşılığı, güzel yüzlü, melek kalpli bitanem…  
+Seni çooook seviyorum iyi ki varsın ❤️
+</p>
+
+<img src="foto.jpg">
+
+<br>
+
+<button onclick="showSurprise()">💍 Sonsuza Kadar Söz Veriyorum 💖</button>
+
+<div id="surprise">
+Evet… Seni sonsuza kadar saygıyla, kıymet ve değerini bilerek seveceğime söz veriyorum ❤️
+</div>
+</div>
+
+<script>
+function startSite(){
+document.getElementById("overlay").style.display="none";
+document.getElementById("mainContent").style.display="block";
+
+var music = document.getElementById("music");
+music.play();
+
+typeWriter();
 }
+
+var i=0;
+var text="Zehramm 💖";
+function typeWriter(){
+if(i<text.length){
+document.getElementById("title").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typeWriter,120);
+}
+}
+
+setInterval(function(){
+var heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(Math.random()*3+3)+"s";
+document.body.appendChild(heart);
+setTimeout(function(){heart.remove();},6000);
+},400);
+
+document.addEventListener("click",function(e){
+var burst=document.createElement("div");
+burst.className="burst";
+burst.innerHTML="💖";
+burst.style.left=e.clientX+"px";
+burst.style.top=e.clientY+"px";
+document.body.appendChild(burst);
+setTimeout(function(){burst.remove();},1000);
+});
+
+function showSurprise(){
+document.getElementById("surprise").style.display="block";
 }
 </script>
 
